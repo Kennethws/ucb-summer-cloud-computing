@@ -1,8 +1,14 @@
 boto3==1.14.61
 botocore==1.17.61
+click==7.1.2
 docutils==0.15.2
+Flask==1.1.2
+itsdangerous==1.1.0
+Jinja2==2.11.2
 jmespath==0.10.0
+MarkupSafe==1.1.1
 python-dateutil==2.8.1
 s3transfer==0.3.3
 six==1.15.0
 urllib3==1.25.10
+Werkzeug==1.0.1
