@@ -5,6 +5,7 @@ __pycache__/
 
 #virtual env
 virt/
+virt/pyvenv.cfg
 
 # C extensions
 *.so
