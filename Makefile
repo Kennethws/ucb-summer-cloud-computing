@@ -4,8 +4,9 @@ setup:
 install:
 	pip install --upgrade pip &&\
 	pip install boto3 &&\
-	pip freeze > requirements.txt &&\
-	pip install -r requirements.txt
+	pip install -r requirements.txt &&\
+		pip freeze > requirements.txt
+	
 
 
 	
