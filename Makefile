@@ -1,5 +1,5 @@
 setup:
-	python3 -m venv virt
+	python3 -m venv .virt
 
 install:
 	pip install --upgrade pip &&\
