@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request
 import boto3
-app = Flask(__name__)
-@app.route('/')
+application = Flask(__name__)
+
+
+
+@application.route('/')
 def index():
    return render_template('index.html')
 
-@app.route('/boto', methods = ['POST', 'GET'])
+@application.route('/boto', methods = ['POST', 'GET'])
 def text_detect():
 	
 	if request.method == 'POST':
@@ -16,4 +19,4 @@ def text_detect():
 		return render_template("boto.html", result=result )
 
 if __name__ == '__main__':
-   app.run(debug = True, host='0.0.0.0', port=8080)
+   application.run()
