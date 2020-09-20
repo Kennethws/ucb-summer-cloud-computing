@@ -17,5 +17,4 @@ def text_detect():
         return render_template("boto.html", result=result )
 
 if __name__ == '__main__':
-    # pylint: disable=no-value-for-parameter
     application.run(host='0.0.0.0', port=8080, debug=True)
