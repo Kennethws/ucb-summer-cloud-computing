@@ -18,5 +18,3 @@ phases:
   post_build:
     commands:
       - echo Linting & Testing completed on `date`
-      
-    
