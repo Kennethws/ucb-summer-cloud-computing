@@ -9,7 +9,7 @@ phases:
       - make install
   build:
     commands:
-      - echo build (linting & testing)
+      - echo build
       - make lint
       - make test
   post_build:
