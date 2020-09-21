@@ -1,4 +1,4 @@
-# test boto3 connection and boto.html
+# test the boto3 connection and boto.html
 from flask import Flask, render_template
 import boto3
 
