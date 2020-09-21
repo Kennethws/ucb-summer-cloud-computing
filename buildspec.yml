@@ -1,20 +1,17 @@
 version: 0.2
 
-environment_variables:
-  plaintext:
-    PYTHON_VERSION: 3.8
-
 phases:
   install:
     runtime-versions:
       python: 3.8
     commands:
-      - make setup
+      - echo install
       - make install
   build:
     commands:
+      - echo build (linting & testing)
       - make lint
       - make test
   post_build:
     commands:
-      - echo Linting & Testing completed on `date`
+      - echo Build completed on `date`
