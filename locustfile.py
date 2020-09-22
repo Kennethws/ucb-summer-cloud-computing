@@ -1,11 +1,14 @@
-from locust import HttpUser, TaskSet, between
-
-def index(l):
-	l.client.get('/')
+from locust import HttpUser, TaskSet, between, task, SequentialTaskSet, User
 
 class UserBehavior(TaskSet):
-	tasks = {index: 1}
+	@task
+	def submit(self):
+			self.client.post('/', {'Text': 'Kobe Bryant is the best NBA player.', 'Language': 'en'})
+	
+	@task	
+	def get_boto(self):
+			self.client.get('/boto')
 
 class WebsiteUser(HttpUser):
-	task_set = UserBehavior
-	wait_time = between(5.0, 9.0)
+	tasks = [UserBehavior]
+	wait_time = between(1, 2)
