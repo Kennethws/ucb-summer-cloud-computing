@@ -1,9 +1,9 @@
-from locust import HttpUser, TaskSet, between, task, SequentialTaskSet, User
+from locust import HttpUser, TaskSet, between, task
 
 class UserBehavior(TaskSet):
 	@task
 	def submit(self):
-			self.client.post('/', {'Text': 'Kobe Bryant is the best NBA player.', 'Language': 'en'})
+			self.client.post('/', {'username': 'Kobe Bryant is the best NBA player.', 'password': 'en'})
 	
 	@task	
 	def get_boto(self):
