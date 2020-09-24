@@ -18,5 +18,10 @@ def text_detect():
 		result = comprehend.detect_key_phrases(Text = text, LanguageCode = language)
 		return render_template("boto.html", result=result )
 
+@application.route('/signature')
+def jsignature():
+
+	return render_template('unmini.html')
+
 if __name__ == '__main__':
-   application.run(host='0.0.0.0', port=8080, debug=True)
+   application.run(debug=True)

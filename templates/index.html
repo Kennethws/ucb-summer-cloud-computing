@@ -1,3 +1,12 @@
+ <!--[if lt IE 9]>
+<script type="text/javascript" src="libs/flashcanvas.js"></script><![endif]-->
+<div id="signature"></div>
+<script src="libs/jSignature.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#signature").jSignature()
+    })
+</script>
   <form action="/boto" method="POST">
      <p>Text <input type = "text" name = "text" /></p>
      <p>Language <input type = "text" name = "language" /></p>
