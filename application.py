@@ -15,6 +15,7 @@ def text_detect():
         language = request.form.get('language')
         result = comprehend.detect_key_phrases(Text = text, LanguageCode = language)
         # result2 = comprehend.detect_sentiment(Text = text, LanguageCode = language)
+        
         return render_template("boto.html", result=result)
 
 if __name__ == '__main__':
