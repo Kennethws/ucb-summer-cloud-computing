@@ -1,10 +1,23 @@
-<!doctype html>
-  <table border = 1>
-     {% for key, value in result.items() %}
-    <tr>
-       <th> {{ key }} </th>
-       <td> {{ value }}</td>
-    </tr>
- {% endfor %}
- </table>
-
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Results</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="The results of NLP analysis">
+        <style type="text/css">
+            h3 {text-align: center}
+        </style>
+    </head>
+    
+    <body style="background-color:powderblue">
+        <h3>Results</h3>
+        <table border = 1>
+            {% for key, value in result.items() %}
+            <tr>
+               <th> {{ key }} </th>
+               <td> {{ value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
