@@ -4,6 +4,7 @@ import random
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import pickle
 
 import tensorflow as tf
 from keras import backend as K
@@ -71,6 +72,8 @@ for index, row in train.iterrows():
 alphabets = ''.join(list(alphabets_set))
 num_of_characters = len(alphabets) + 1 # +1 for ctc pseudo blank
 num_of_timestamps = 64 # max length of predicted labels
+with open('training_info.pickle','wb') as f:
+    pickle.dump([alphabets, max_str_len, num_of_characters, num_of_timestamps], f)
 
 def label_to_num(label):
     global alphabets
