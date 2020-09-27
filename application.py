@@ -23,7 +23,7 @@ def text_detect():
 		result = comprehend.detect_key_phrases(Text = text, LanguageCode = language)
 		return render_template("boto.html", result=result )
 
-@application.route('/ml_result', methods = ['GET'])
+@application.route('/ml_result', methods = ['Post', 'GET'])
 def ml_result():
     # Reload model and other parameters
     with open('training_info.pickle', 'rb') as f:
@@ -40,7 +40,7 @@ def ml_result():
     plt.figure(figsize=(15, 10))
     for i in range(6):
         ax = plt.subplot(2, 3, i+1)
-        img_dir = 'test_v2/test/'+test.loc[i, 'FILENAME']
+        img_dir = 'test_v2/test/TEST_9992.jpg'
         image = cv2.imread(img_dir, cv2.IMREAD_GRAYSCALE)
         plt.imshow(image, cmap='gray')
 
