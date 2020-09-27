@@ -20,4 +20,8 @@ def hello():
     return 'Hello!'
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     app.run(host='0.0.0.0', port=8080, debug=True)
+=======
+    app.run(host='0.0.0.0', port=8080, debug=True)
+>>>>>>> 3cb85bfa1588fb9cd99544cb1a58c3cc993d6066
