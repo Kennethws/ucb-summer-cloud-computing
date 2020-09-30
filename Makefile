@@ -8,7 +8,8 @@ install:
 	pip3 install awsebcli &&\
 	pip install pandas &&\
 	pip install matplotlib &&\
-	pip install tensorflow-gpu &&\
+	pip install tensorflow==1.14 &&\
+	pip install keras==2.2.5 &&\
 	pip install opencv &&\
 	pip install -r requirements.txt &&\
 	pip freeze > requirements.txt
