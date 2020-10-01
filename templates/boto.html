@@ -1,10 +1,58 @@
-<!doctype html>
-  <table border = 1>
-     {% for key, value in result.items() %}
-    <tr>
-       <th> {{ key }} </th>
-       <td> {{ value }}</td>
-    </tr>
- {% endfor %}
- </table>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Results</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="The results of NLP analysis">
+        <style type="text/css">
+            h3 {text-align: center}
+            h4 {text-align: center}
+            table.center {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+    </head>
 
+    <body style="background-color:powderblue">
+        <h3>Results</h3>
+        <h4>Table of Sentiment Analysis</h4>
+        <table class = 'center', border = 1>
+            <tr>
+                <th>Sentiment</th>
+                <th>Score</th>
+            </tr>
+            <tr>
+                <td style = "color: red">{{category[0]}}</td>
+                <td style = "color: red">{{score_sentiment[0]}}</td>
+            </tr>
+            <tr>
+                <td>{{category[1]}}</td>
+                <td>{{score_sentiment[1]}}</td>
+            </tr>
+            <tr>
+                <td>{{category[2]}}</td>
+                <td>{{score_sentiment[2]}}</td>
+            </tr>
+            <tr>
+                <td>{{category[3]}}</td>
+                <td>{{score_sentiment[3]}}</td>
+            </tr>
+        </table>
+
+        <h4>Table of Key Phrases</h4>
+        <table class = 'center', border = 1>
+            <tr>
+                <th>Key Phrases</th>
+                <th>Score</th>
+            </tr>
+
+            {% for i in range(length) %}
+            <tr>
+               <td> {{ phrases[i] }} </td>
+               <td> {{ score_phrase[i] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
