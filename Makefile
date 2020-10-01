@@ -1,0 +1,11 @@
+flask
+boto3
+awsebcli
+pylint
+pytest
+pandas
+matplotlib
+tensorflow==1.14
+keras==2.2.5
+opencv
+locust
