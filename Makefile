@@ -1,11 +1,9 @@
-flask
-boto3
-awsebcli
-pylint
-pytest
-pandas
-matplotlib
-tensorflow==1.14
-keras==2.2.5
-opencv
-locust
+setup:
+	python3 -m venv ~/.virt
+
+install:
+	pip install --upgrade pip &&\
+	pip install boto3 &&\
+	pip install Flask &&\
+	pip install -r requirements.txt &&\
+	pip freeze > requirements.txt
