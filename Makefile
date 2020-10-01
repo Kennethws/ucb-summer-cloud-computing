@@ -7,5 +7,6 @@ install:
 	pip install boto3 &&\
 	pip install Flask &&\
 	pip instal keras &&\
+	pip install opencv-python &&\
 	pip install -r requirements.txt &&\
 	pip freeze > requirements.txt
