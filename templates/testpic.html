@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Handwritten Recognition Example</title>
+	<style type="text/css">
+            h1 {text-align: center}
+            h2 {text-align: center}
+            h3 {text-align: center}
+            p {text-align: center}
+            textarea {text-align: center}
+            button{display: block;margin: 0 auto}
+        </style>
+</head>
+<body style="background-color:powderblue;">
+	<h1>Handwritten Recognition Example</h1>
+        <h2>Press the button to see how our model works</h2>
+<div id="content">
+	<div id="signatureparent">
+	<div>
+		<p>Display Area:</p><div id="displayarea"></div>
+		<p><img src="{{ url_for('static', filename='img/TEST_9992.jpg')}}"/></p>
+
+	</div>
+	<div><p>Recognition Result:</p><div id='recognition' style="text-align:center;"></div></div>
+</div>
+<script src="{{url_for('static', filename='libs/jquery.js')}}"></script>
+<script>
+$(document).ready(function(){
+	var $extraarea = $('#displayarea')
+	, $recognition = $('#recognition')
+
+	$('<input type="button" value="Hit Me!">').bind('click', function(e){
+		$.post("/rec_example").done(function(data){
+			alert("success")
+			$('textarea', $recognition).val(JSON.stringify(data))
+		})
+		
+	}).appendTo($recognition)
+
+	$('<div><textarea style="width:35%;height:4em;"></textarea></div>').appendTo($recognition)
+})
+
+</script>
+<button onclick="window.location.href='/'">Go back</button>
+
+</body>
+</html>

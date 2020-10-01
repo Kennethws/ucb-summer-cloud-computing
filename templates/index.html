@@ -1,15 +1,36 @@
- <!--[if lt IE 9]>
-<script type="text/javascript" src="libs/flashcanvas.js"></script><![endif]-->
-<div id="signature"></div>
-<script src="libs/jSignature.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $("#signature").jSignature()
-    })
-</script>
-  <form action="/boto" method="POST">
-     <p>Text <input type = "text" name = "text" /></p>
-     <p>Language <input type = "text" name = "language" /></p>
-    
-     <p><input type = "submit" value = "submit" /></p>
-  </form>
+<!doctype html>
+<html>
+    <head>
+        <title>NLP web app for detecting key phrases and sentiment of your text</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="This app utilizes AI API - AWS Comprehend, together with AWS CodeBuild, Elastic Beanstalk and AWS Codepipeline.">
+        <style type="text/css">
+            h1 {text-align: center}
+            h2 {text-align: center}
+            h3 {text-align: center}
+            p {text-align: center}
+            button{display: block;margin: 0 auto}
+        </style>
+    </head>
+    <body style="background-color:powderblue;">
+        <h1>Multilingual NLP Web App</h1>
+        <h2>Key Phrase Detecting & Sentiment Analysis</h2>
+        <h3>Please enter your text and its language category below:</h3>
+        <form action="/boto" method="POST">
+             <p>Text <input type = "text" name = "text" /></p>
+             <p>Language <input type = "text" name = "language" /></p>
+             <p><input type = "submit" value = "submit" /></p>
+        </form>
+
+		<h1>Handwritten Recognition Example</h1>
+		<button onclick="window.location.href='/testpic'">Let's see</button>
+
+		<h1>Recognize What you write HERE!</h1>
+		
+		<button onclick="window.location.href='/signature'">Let's see</button>
+		
+
+
+
+    </body>
+</html>
