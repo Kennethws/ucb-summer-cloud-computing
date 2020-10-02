@@ -1,5 +1,5 @@
 # UCB Cloud Computing
-This is an NLP project that creates a flask app by AI APIs, AWS Elastic Beanstalk and Code Pipeline.
+This is an NLP project that creates a flask app by AI APIs, AWS Elastic Beanstalk, and Code Pipeline.
 
 ## Procedures (Code Pipeline)
 1. Source: Github (Flask + AI APIs)
