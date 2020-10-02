@@ -7,9 +7,6 @@ phases:
     commands:
       - echo Install
       - make install
-  build:
-    commands:
-      - python application.py
   post_build:
     commands:
       - echo Build completed on `date`
