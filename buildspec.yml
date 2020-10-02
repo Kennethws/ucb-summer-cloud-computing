@@ -9,10 +9,7 @@ phases:
       - make install
   build:
     commands:
-      - echo Linting
-      - make lint
-      - echo Testing
-      - make test
+      - python application.py
   post_build:
     commands:
       - echo Build completed on `date`
