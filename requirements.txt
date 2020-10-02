@@ -44,6 +44,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 jmespath==0.10.0
 jsonschema==3.2.0
+Keras==2.4.3
 Keras-Preprocessing==1.1.2
 kiwisolver==1.2.0
 lazy-object-proxy==1.4.3
