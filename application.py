@@ -66,8 +66,9 @@ def handwritten_detect():
             f.write(data)
 
         file_name = "handwritten.png"
-        # bucket = 'ucb-rekognition'
-        bucket = 'handwritten-image'
+        bucket = 'ucb-rekognition'
+        
+        # bucket = 'handwritten-image'
         key_name = "handwritten.png"
         # create a resource of S3 to use 'Bucket' attribute
         s3_resource = boto3.client('s3')
@@ -106,8 +107,8 @@ def upload():
     if request.method == 'POST':
     # get the image uploaded by the user
         file = request.files['file']
-        # bucket = 'ucb-rekognition'
-        bucket = 'handwritten-image'
+        bucket = 'ucb-rekognition'
+        # bucket = 'handwritten-image'
         # create a resource of S3 to use 'Bucket' attribute
         s3_resource = boto3.resource('s3')
 
