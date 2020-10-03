@@ -17,7 +17,7 @@
             <header id="header" class="alt">
                 <div class="logo"><a href="{{url_for('index')}}">AWS Project</div>
                 <a href="#menu">Menu</a>
-            </header>
+            </header> 
 
 		<!-- Nav -->
 			<nav id="menu">
@@ -120,10 +120,10 @@
 
             </script>
             <script src="{{url_for('static', filename='src/jSignature.js')}}"></script>
-            <script src="{{url_for('static', filename='src/plugins/jSignature.CompressorBase30.js')}}"></script>
-            <script src="{{url_for('static', filename='src/plugins/jSignature.CompressorSVG.js')}}"></script>
+            <!-- <script src="{{url_for('static', filename='src/plugins/jSignature.CompressorBase30.js')}}"></script> -->
+            <!-- <script src="{{url_for('static', filename='src/plugins/jSignature.CompressorSVG.js')}}"></script> -->
             <script src="{{url_for('static', filename='src/plugins/jSignature.UndoButton.js')}}"></script>
-            <script src="{{url_for('static', filename='src/plugins/signhere/jSignature.SignHere.js')}}"></script>
+            <!-- <script src="{{url_for('static', filename='src/plugins/signhere/jSignature.SignHere.js')}}"></script> -->
             <script>
             $(document).ready(function() {
 
@@ -211,7 +211,7 @@
             	$.subscribe(pubsubprefix + 'image/png;base64', function(data) {
             		var i = new Image()
             		i.src = 'data:' + data[0] + ',' + data[1]
-            		$('<span><b>As you can see, one of the problems of "image" extraction (besides not working on some old Androids, elsewhere) is that it extracts A LOT OF DATA and includes all the decoration that is not part of the signature.</b></span>').appendTo($extraarea)
+            		$('<span><b>Your writing has been extracted as a png image and encoded in base64.</b></span>').appendTo($extraarea)
             		$(i).appendTo($extraarea)
             	});
 
@@ -233,16 +233,16 @@
             	$('<input type="button" value="Detect">').bind('click', function(data){
             		var img = $('textarea', $tools).val()
             		$.post("/written_detect",{"data":img}).done(function(data){
-            			alert("success")
+            			alert("Recognition Success")
             			$('textarea', $recognition).val(JSON.stringify(data))
             		})
             	}).appendTo($recognition)
 
 
 
-            	if (Modernizr.touch){
-            		$('#scrollgrabber').height($('#content').height())
-            	}
+            	// if (Modernizr.touch){
+            	// 	$('#scrollgrabber').height($('#content').height())
+            	// }
 
             })
             </script>

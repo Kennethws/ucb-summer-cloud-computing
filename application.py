@@ -60,14 +60,14 @@ def written_first():
 def handwritten_detect():
     if request.method == 'POST':
         data_uri = request.form.get('data')
-        # header unused
         encoded = data_uri.split(",", 1)
-        data = b64decode(encoded)
+        data = b64decode(encoded[1])
         with open("handwritten.png", "wb") as f:
             f.write(data)
 
         file_name = "handwritten.png"
-        bucket = 'ucb-rekognition'
+        # bucket = 'ucb-rekognition'
+        bucket = 'handwritten-image'
         key_name = "handwritten.png"
         # create a resource of S3 to use 'Bucket' attribute
         s3_resource = boto3.client('s3')
@@ -106,8 +106,8 @@ def upload():
     if request.method == 'POST':
     # get the image uploaded by the user
         file = request.files['file']
-        bucket = 'ucb-rekognition'
-
+        # bucket = 'ucb-rekognition'
+        bucket = 'handwritten-image'
         # create a resource of S3 to use 'Bucket' attribute
         s3_resource = boto3.resource('s3')
 
@@ -168,4 +168,4 @@ def upload():
 
 
 if __name__ == '__main__':
-    application.run(host='0.0.0.0', port=8080, debug=True)
+    application.run(debug=True)
