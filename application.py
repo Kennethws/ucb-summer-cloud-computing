@@ -54,7 +54,7 @@ def text_detect():
 
 @application.route('/written_first', methods=['POST', 'GET'])
 def written_first():
-    return render_template("unmini.html")
+    return render_template("nice_unmini.html")
 
 @application.route('/written_detect', methods=['POST', 'GET'])
 def handwritten_detect():
