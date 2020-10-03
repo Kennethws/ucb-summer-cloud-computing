@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<!--
+	Hielo by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+    <head>
+        <title>Home</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="{{url_for('static', filename='assets/css/main.css')}}" />
+    </head>
+    <body>
+
+        <!-- Header -->
+            <header id="header" class="alt">
+                <div class="logo"><a href="{{url_for('index')}}">AWS Project</div>
+                <a href="#menu">Menu</a>
+            </header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="{{url_for('index')}}">Home</a></li>
+					<li><a href="{{url_for('boto_first')}}">Boto3 Task</a></li>
+					<li><a href="{{url_for('upload_page')}}">Handwriting Recognition</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section id="One" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+						<p>Built-in Module in AWS</p>
+						<h2>Image Text Detection & NLP</h2>
+					</header>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style2">
+				<div class="inner">
+					<div class="box">
+						<div class="content">
+                            <div id="signatureparent">
+                        		<div>Write the text here</div>
+                        		<div id="signature"></div></div>
+                        	<div id="tools"></div>
+                        	<div><p>Display Area:</p><div id="displayarea"></div></div>
+                        	<div><p>Recognition Result:</p><div id='recognition'></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        <!-- Footer -->
+            <footer id="footer">
+			    <div class="container">
+                    <ul class="icons">
+					    <li><a target="_blank" href="https://github.com/Kennethws/ucb-summer-cloud-computing" class="icon fa-github"><span class="label">Github</span></a></li>
+				    </ul>
+			    </div>
+			    <div class="copyright">
+				    Template from templated.co. All rights reserved.
+			    </div>
+		    </footer>
+
+        <!-- Scripts -->
+            <script src="{{url_for('static', filename='assets/js/jquery.min.js')}}"></script>
+			<script src="{{url_for('static', filename='assets/js/jquery.scrollex.min.js')}}"></script>
+			<script src="{{url_for('static', filename='assets/js/skel.min.js')}}"></script>
+			<script src="{{url_for('static', filename='assets/js/util.js')}}"></script>
+			<script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+            <script src="{{url_for('static', filename='libs/jquery.js')}}"></script>
+            <script>
+            /*  @preserve
+            jQuery pub/sub plugin by Peter Higgins (dante@dojotoolkit.org)
+            Loosely based on Dojo publish/subscribe API, limited in scope. Rewritten blindly.
+            Original is (c) Dojo Foundation 2004-2010. Released under either AFL or new BSD, see:
+            http://dojofoundation.org/license for more information.
+            */
+            (function($) {
+            	var topics = {};
+            	$.publish = function(topic, args) {
+            	    if (topics[topic]) {
+            	        var currentTopic = topics[topic],
+            	        args = args || {};
+
+            	        for (var i = 0, j = currentTopic.length; i < j; i++) {
+            	            currentTopic[i].call($, args);
+            	        }
+            	    }
+            	};
+            	$.subscribe = function(topic, callback) {
+            	    if (!topics[topic]) {
+            	        topics[topic] = [];
+            	    }
+            	    topics[topic].push(callback);
+            	    return {
+            	        "topic": topic,
+            	        "callback": callback
+            	    };
+            	};
+            	$.unsubscribe = function(handle) {
+            	    var topic = handle.topic;
+            	    if (topics[topic]) {
+            	        var currentTopic = topics[topic];
+
+            	        for (var i = 0, j = currentTopic.length; i < j; i++) {
+            	            if (currentTopic[i] === handle.callback) {
+            	                currentTopic.splice(i, 1);
+            	            }
+            	        }
+            	    }
+            	};
+            })(jQuery);
+
+            </script>
+            <script src="{{url_for('static', filename='src/jSignature.js')}}"></script>
+            <script src="{{url_for('static', filename='src/plugins/jSignature.CompressorBase30.js')}}"></script>
+            <script src="{{url_for('static', filename='src/plugins/jSignature.CompressorSVG.js')}}"></script>
+            <script src="{{url_for('static', filename='src/plugins/jSignature.UndoButton.js')}}"></script>
+            <script src="{{url_for('static', filename='src/plugins/signhere/jSignature.SignHere.js')}}"></script>
+            <script>
+            $(document).ready(function() {
+
+            	// This is the part where jSignature is initialized.
+            	var $sigdiv = $("#signature").jSignature({'UndoButton':true})
+
+            	// All the code below is just code driving the demo.
+            	, $tools = $('#tools')
+            	, $extraarea = $('#displayarea')
+            	, $recognition = $('#recognition')
+            	, pubsubprefix = 'jSignature.demo.'
+
+            	var export_plugins = $sigdiv.jSignature('listPlugins','export')
+            	, chops = ['<span><b>Extract signature data as: </b></span><select>','<option value="">(select export format)</option>']
+            	, name
+            	for(var i in export_plugins){
+            		if (export_plugins.hasOwnProperty(i)){
+            			name = export_plugins[i]
+            			chops.push('<option value="' + name + '">' + name + '</option>')
+            		}
+            	}
+            	chops.push('</select><span><b> or: </b></span>')
+
+            	$(chops.join('')).bind('change', function(e){
+            		if (e.target.value !== ''){
+            			var data = $sigdiv.jSignature('getData', e.target.value)
+            			$.publish(pubsubprefix + 'formatchanged')
+            			if (typeof data === 'string'){
+            				$('textarea', $tools).val(data)
+            			} else if($.isArray(data) && data.length === 2){
+            				$('textarea', $tools).val(data.join(','))
+            				$.publish(pubsubprefix + data[0], data);
+            			} else {
+            				try {
+            					$('textarea', $tools).val(JSON.stringify(data))
+            				} catch (ex) {
+            					$('textarea', $tools).val('Not sure how to stringify this, likely binary, format.')
+            				}
+            			}
+            		}
+            	}).appendTo($tools)
+
+
+            	$('<input type="button" value="Reset">').bind('click', function(e){
+            		$sigdiv.jSignature('reset')
+            	}).appendTo($tools)
+
+            	$('<div><textarea id = "textarea" style="width:100%;height:7em;"></textarea></div>').appendTo($tools)
+
+            	$.subscribe(pubsubprefix + 'formatchanged', function(){
+            		$extraarea.html('')
+            	})
+
+            	$.subscribe(pubsubprefix + 'image/svg+xml', function(data) {
+
+            		try{
+            			var i = new Image()
+            			i.src = 'data:' + data[0] + ';base64,' + btoa( data[1] )
+            			$(i).appendTo($extraarea)
+            		} catch (ex) {
+
+            		}
+
+            		var message = [
+            			"If you don't see an image immediately above, it means your browser is unable to display in-line (data-url-formatted) SVG."
+            			, "This is NOT an issue with jSignature, as we can export proper SVG document regardless of browser's ability to display it."
+            			, "Try this page in a modern browser to see the SVG on the page, or export data as plain SVG, save to disk as text file and view in any SVG-capabale viewer."
+                       ]
+            		$( "<div>" + message.join("<br/>") + "</div>" ).appendTo( $extraarea )
+            	});
+
+            	$.subscribe(pubsubprefix + 'image/svg+xml;base64', function(data) {
+            		var i = new Image()
+            		i.src = 'data:' + data[0] + ',' + data[1]
+            		$(i).appendTo($extraarea)
+
+            		var message = [
+            			"If you don't see an image immediately above, it means your browser is unable to display in-line (data-url-formatted) SVG."
+            			, "This is NOT an issue with jSignature, as we can export proper SVG document regardless of browser's ability to display it."
+            			, "Try this page in a modern browser to see the SVG on the page, or export data as plain SVG, save to disk as text file and view in any SVG-capabale viewer."
+                       ]
+            		$( "<div>" + message.join("<br/>") + "</div>" ).appendTo( $extraarea )
+            	});
+
+            	$.subscribe(pubsubprefix + 'image/png;base64', function(data) {
+            		var i = new Image()
+            		i.src = 'data:' + data[0] + ',' + data[1]
+            		$('<span><b>As you can see, one of the problems of "image" extraction (besides not working on some old Androids, elsewhere) is that it extracts A LOT OF DATA and includes all the decoration that is not part of the signature.</b></span>').appendTo($extraarea)
+            		$(i).appendTo($extraarea)
+            	});
+
+            	$.subscribe(pubsubprefix + 'image/jsignature;base30', function(data) {
+            		$('<span><b>This is a vector format not natively render-able by browsers. Format is a compressed "movement coordinates arrays" structure tuned for use server-side. The bonus of this format is its tiny storage footprint and ease of deriving rendering instructions in programmatic, iterative manner.</b></span>').appendTo($extraarea)
+            	});
+
+            	// $('<input type="button" value="RecognitionButton">').bind('click', function(e){
+            	// 	var img = $('textarea', $tools).val()
+            	// 	$.post("/recognize",{"data":img}).done(function(data){
+            	// 		alert("success")
+            	// 		$('textarea', $recognition).val(JSON.stringify(data))
+            	// 	})
+
+            	// }).appendTo($recognition)
+
+            	$('<div><textarea style="width:100%;height:7em;"></textarea></div>').appendTo($recognition)
+
+            	$('<input type="button" value="Detect">').bind('click', function(data){
+            		var img = $('textarea', $tools).val()
+            		$.post("/written_detect",{"data":img}).done(function(data){
+            			alert("success")
+            			$('textarea', $recognition).val(JSON.stringify(data))
+            		})
+            	}).appendTo($recognition)
+
+
+
+            	if (Modernizr.touch){
+            		$('#scrollgrabber').height($('#content').height())
+            	}
+
+            })
+            </script>
+    </body>
+</html>
