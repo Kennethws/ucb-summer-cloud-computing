@@ -3,4 +3,5 @@ pylint
 pytest
 flask
 awsebcli
+flask-bootstrap
 locust
