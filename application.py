@@ -4,7 +4,7 @@ from base64 import b64decode
 # import svglib
 # from svglib.svglib import svg2rlg
 # from reportlab.graphics import renderPDF, renderPM
-import os
+# import os
 application = Flask(__name__)
 
 @application.route('/')
@@ -51,13 +51,14 @@ def text_detect():
 def handwritten_detect():
     if request.method == 'POST':
         data_uri = request.form.get('data')
-        header, encoded = data_uri.split(",", 1)
+        # header unused
+        encoded = data_uri.split(",", 1)
         data = b64decode(encoded)
         with open("handwritten.png", "wb") as f: 
             f.write(data)
     
         file_name = "handwritten.png"
-        bucket = 'handwritten-image'
+        bucket = 'ucb-rekognition'
         key_name = "handwritten.png"
         # create a resource of S3 to use 'Bucket' attribute
         s3_resource = boto3.client('s3')
@@ -65,6 +66,7 @@ def handwritten_detect():
         # upload the file as on object using put_object
         # s3_resource.Bucket(bucket).put_object(Key=file.filename, Body=file)
         s3_resource.upload_file(file_name, bucket, key_name)
+        
         ## detect text from the image uploaded onto S3 by AWS Rekognition
         rekognition = boto3.client('rekognition', region_name = 'us-west-2')
         
@@ -155,4 +157,4 @@ def handwritten_detect():
 
 
 if __name__ == '__main__':
-    application.run(debug=True)
+    application.run(debug=True, host='0.0.0.0', port=8080)
