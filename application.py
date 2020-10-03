@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
 import boto3
 from base64 import b64decode
-import svglib
-from svglib.svglib import svg2rlg
-from reportlab.graphics import renderPDF, renderPM
+# import svglib
+# from svglib.svglib import svg2rlg
+# from reportlab.graphics import renderPDF, renderPM
 import os
 application = Flask(__name__)
 
@@ -151,12 +151,6 @@ def handwritten_detect():
         
         
 #         return render_template("rekognition.html", words=words, score_phrase=score_phrase, phrases=phrases, length=length, score_sentiment=score_sentiment, category=category)
-
-
-
-
-
-
 
 
 
