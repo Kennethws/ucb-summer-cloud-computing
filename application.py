@@ -52,6 +52,9 @@ def text_detect():
 
         return render_template("boto.html", score_phrase=score_phrase, phrases=phrases, length=length, score_sentiment=score_sentiment, category=category)
 
+@application.route('/written_first', methods=['POST', 'GET'])
+def written_first():
+    return render_template("unmini.html")
 
 @application.route('/written_detect', methods=['POST', 'GET'])
 def handwritten_detect():
