@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import boto3
 
 application = Flask(__name__)
@@ -48,9 +48,6 @@ def upload():
     # get the image uploaded by the user
         file = request.files['file']
         bucket = 'ucb-rekognition'
-        
-        # create an S3 client
-        s3_client = boto3.client('s3')
         
         # create a resource of S3 to use 'Bucket' attribute
         s3_resource = boto3.resource('s3')  
@@ -108,7 +105,6 @@ def upload():
         
         
         return render_template("rekognition.html", words=words, score_phrase=score_phrase, phrases=phrases, length=length, score_sentiment=score_sentiment, category=category)
-        # return redirect(url_for('index'))
 
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=8080, debug=True)
