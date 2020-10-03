@@ -43,46 +43,12 @@
 				<div class="inner">
 					<div class="box">
 						<div class="content">
-                            <h3>Results</h3>
-                            <h4>Table of Sentiment Analysis</h4>
-                            <table class = 'center', border = 1>
-                                <tr>
-                                    <th>Sentiment</th>
-                                    <th>Score</th>
-                                </tr>
-                                <tr>
-                                    <td style = "color: red">{{category[0]}}</td>
-                                    <td style = "color: red">{{score_sentiment[0]}}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{category[1]}}</td>
-                                    <td>{{score_sentiment[1]}}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{category[2]}}</td>
-                                    <td>{{score_sentiment[2]}}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{category[3]}}</td>
-                                    <td>{{score_sentiment[3]}}</td>
-                                </tr>
-                            </table>
-
-                            <h4>Table of Key Phrases</h4>
-                            <table class = 'center', border = 1>
-                                <tr>
-                                    <th>Key Phrases</th>
-                                    <th>Score</th>
-                                </tr>
-
-                                {% for i in range(length) %}
-                                <tr>
-                                   <td> {{ phrases[i] }} </td>
-                                   <td> {{ score_phrase[i] }}</td>
-                                </tr>
-                                {% endfor %}
-                            </table>
-                            <button onclick="window.location.href='{{url_for('boto_first')}}'">Go back</button>
+                            <h3>Please enter your text and its language category below:</h3>
+                            <form action="/boto" method="POST">
+                                <p>Text <input type = "text" name = "text" /></p>
+                                <p>Language <input type = "text" name = "language" /></p>
+                                <p><input type = "submit" value = "submit" /></p>
+                            </form>
                         </div>
                     </div>
                 </div>

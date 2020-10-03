@@ -1,31 +1,109 @@
-<!doctype html>
+<!DOCTYPE HTML>
+<!--
+	Hielo by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
 <html>
-    <head>
-        <title>NLP web app for detecting key phrases and sentiment of your text</title>
-        <meta charset="UTF-8">
-        <meta name="description" content="This app utilizes AI API - AWS Comprehend, together with AWS CodeBuild, Elastic Beanstalk and AWS Codepipeline.">
-        <style type="text/css">
-            h1 {text-align: center}
-            h2 {text-align: center}
-            h3 {text-align: center}
-            p {text-align: center}
-        </style>
-    </head>
-    <body style="background-color:powderblue;">
-        <h1>Multilingual CV & NLP Web App</h1>
-        <h2>Image Text Detection & NLP</h2>
-        <h3>Please upload your image:</h3>
-        <form class="upload-form" action='/upload' method="POST" enctype="multipart/form-data">
-            <p><input type="file" name='file'</p>
-            <button type='submit' name='submit'>Upload</button>
-        </form>
-        
-        <h2>Key Phrase Detecting & Sentiment Analysis</h2>
-        <h3>Please enter your text and its language category below:</h3>
-        <form action="/boto" method="POST">
-             <p>Text <input type = "text" name = "text" /></p>
-             <p>Language <input type = "text" name = "language" /></p>
-             <p><input type = "submit" value = "Submit" /></p>
-        </form>
-    </body>
+	<head>
+		<title>Home</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{{url_for('static', filename='assets/css/main.css')}}" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header" class="alt">
+				<div class="logo"><a href="{{url_for('index')}}">AWS Project</div>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="{{url_for('index')}}">Home</a></li>
+					<li><a href="{{url_for('boto_first')}}">Boto3 Task</a></li>
+					<li><a href="elements.html">Handwriting Recognition</a></li>
+				</ul>
+			</nav>
+
+		<!-- Banner -->
+			<section class="banner full">
+				<article>
+					<img src="{{url_for('static', filename='images/slide01.jpg')}}" alt="" />
+					<div class="inner">
+						<header>
+							<p>A web application for simple NLP task and handwriting recognition</p>
+							<h2>AWS Project</h2>
+						</header>
+					</div>
+				</article>
+			</section>
+
+		<!-- One -->
+			<section id="one" class="wrapper style2">
+				<div class="inner">
+					<div class="grid-style">
+
+						<div>
+							<div class="box">
+								<div class="image fit">
+									<img src="{{url_for('static', filename='images/pic02.jpg')}}" alt="" />
+								</div>
+								<div class="content">
+									<header class="align-center">
+										<p>Built-in Module in AWS</p>
+										<h2>Boto3 Task</h2>
+									</header>
+									<p> By using this built-in module, we can do a simple NLP analysis for a given sentences in different languages. </p>
+									<footer class="align-center">
+										<a href="{{url_for('boto_first')}}" class="button alt">Learn More</a>
+									</footer>
+								</div>
+							</div>
+						</div>
+
+						<div>
+							<div class="box">
+								<div class="image fit">
+									<img src="{{url_for('static', filename='images/pic03.jpg')}}" alt="" />
+								</div>
+								<div class="content">
+									<header class="align-center">
+										<p>Deep Learning Model Application</p>
+										<h2>Handwriting Recognition</h2>
+									</header>
+									<p> We are using CRNN model and a jquery application together to finish this task.</p>
+									<footer class="align-center">
+										<a href="#" class="button alt">Learn More</a>
+									</footer>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="icons">
+						<li><a target="_blank" href="https://github.com/Kennethws/ucb-summer-cloud-computing" class="icon fa-github"><span class="label">Github</span></a></li>
+					</ul>
+				</div>
+				<div class="copyright">
+					Template from templated.co. All rights reserved.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{{url_for('static', filename='assets/js/jquery.min.js')}}"></script>
+			<script src="{{url_for('static', filename='assets/js/jquery.scrollex.min.js')}}"></script>
+			<script src="{{url_for('static', filename='assets/js/skel.min.js')}}"></script>
+			<script src="{{url_for('static', filename='assets/js/util.js')}}"></script>
+			<script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+
+	</body>
 </html>

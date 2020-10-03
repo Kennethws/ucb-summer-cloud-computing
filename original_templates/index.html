@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <title>NLP web app for detecting key phrases and sentiment of your text</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="This app utilizes AI API - AWS Comprehend, together with AWS CodeBuild, Elastic Beanstalk and AWS Codepipeline.">
+        <style type="text/css">
+            h1 {text-align: center}
+            h2 {text-align: center}
+            h3 {text-align: center}
+            p {text-align: center}
+        </style>
+    </head>
+    <body style="background-color:powderblue;">
+        <h1>Multilingual CV & NLP Web App</h1>
+        <h2>Image Text Detection & NLP</h2>
+        <h3>Please upload your image:</h3>
+        <form class="upload-form" action='/upload' method="POST" enctype="multipart/form-data">
+            <p><input type="file" name='file'</p>
+            <button type='submit' name='submit'>Upload</button>
+        </form>
+        
+        <h2>Key Phrase Detecting & Sentiment Analysis</h2>
+        <h3>Please enter your text and its language category below:</h3>
+        <form action="/boto" method="POST">
+             <p>Text <input type = "text" name = "text" /></p>
+             <p>Language <input type = "text" name = "language" /></p>
+             <p><input type = "submit" value = "Submit" /></p>
+        </form>
+    </body>
+</html>
