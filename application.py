@@ -7,7 +7,7 @@ from base64 import b64decode
 # import os
 
 application = Flask(__name__)
-application.static_folder = '/Users/oscar/Downloads/templated-hielo/templates/'
+# application.static_folder = '/Users/oscar/Downloads/templated-hielo/templates/'
 
 @application.route('/')
 def index():
@@ -168,4 +168,4 @@ def upload():
 
 
 if __name__ == '__main__':
-   application.run(host='0.0.0.0', port=8080, debug=True)
+    application.run(host='0.0.0.0', port=8080, debug=True)
