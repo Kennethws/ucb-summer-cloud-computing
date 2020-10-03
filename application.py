@@ -7,7 +7,7 @@ from base64 import b64decode
 # import os
 
 application = Flask(__name__)
-application.static_folder = '/home/ec2-user/environment/ucb-summer-cloud-computing/templates/'
+# application.static_folder = '/home/ec2-user/environment/ucb-summer-cloud-computing/templates/'
 
 @application.route('/')
 def index():
