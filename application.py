@@ -1,11 +1,10 @@
 from flask import Flask, render_template, request
 import boto3
-# from keras import backend as K
-# from keras.models import Model
-# from tensorflow.keras.models import load_model
-# from keras.layers import Input, Conv2D, MaxPooling2D, Reshape, Bidirectional, LSTM, Dense, Lambda, Activation, BatchNormalization, Dropout
-# from keras.optimizers import Adam
-# import matplotlib.pyplot as plt
+from base64 import b64decode
+# import svglib
+# from svglib.svglib import svg2rlg
+# from reportlab.graphics import renderPDF, renderPM
+# import os
 
 application = Flask(__name__)
 application.static_folder = '/Users/oscar/Downloads/templated-hielo/templates/'
@@ -54,98 +53,46 @@ def text_detect():
         return render_template("boto.html", score_phrase=score_phrase, phrases=phrases, length=length, score_sentiment=score_sentiment, category=category)
 
 
-@application.route('/ml_result', methods = ['Post', 'GET'])
-def ml_result():
-    # Reload parameters
-    alphabets = u"ABCDEFGHIJKLMNOPQRSTUVWXYZ-' "
-    max_str_len = 24 # max length of input labels
-    num_of_characters = len(alphabets) + 1 # +1 for ctc pseudo blank
-    num_of_timestamps = 64 # max length of predicted labels
+@application.route('/written_detect', methods=['POST', 'GET'])
+def handwritten_detect():
+    if request.method == 'POST':
+        data_uri = request.form.get('data')
+        # header unused
+        encoded = data_uri.split(",", 1)
+        data = b64decode(encoded)
+        with open("handwritten.png", "wb") as f:
+            f.write(data)
 
-    # Rebuild the model
-    input_data = Input(shape=(256, 64, 1), name='input')
+        file_name = "handwritten.png"
+        bucket = 'ucb-rekognition'
+        key_name = "handwritten.png"
+        # create a resource of S3 to use 'Bucket' attribute
+        s3_resource = boto3.client('s3')
 
-    inner = Conv2D(32, (3, 3), padding='same', name='conv1', kernel_initializer='he_normal')(input_data)
-    inner = BatchNormalization()(inner)
-    inner = Activation('relu')(inner)
-    inner = MaxPooling2D(pool_size=(2, 2), name='max1')(inner)
+        # upload the file as on object using put_object
+        # s3_resource.Bucket(bucket).put_object(Key=file.filename, Body=file)
+        s3_resource.upload_file(file_name, bucket, key_name)
 
-    inner = Conv2D(64, (3, 3), padding='same', name='conv2', kernel_initializer='he_normal')(inner)
-    inner = BatchNormalization()(inner)
-    inner = Activation('relu')(inner)
-    inner = MaxPooling2D(pool_size=(2, 2), name='max2')(inner)
-    inner = Dropout(0.3)(inner)
+        ## detect text from the image uploaded onto S3 by AWS Rekognition
+        rekognition = boto3.client('rekognition', region_name = 'us-west-2')
 
-    inner = Conv2D(128, (3, 3), padding='same', name='conv3', kernel_initializer='he_normal')(inner)
-    inner = BatchNormalization()(inner)
-    inner = Activation('relu')(inner)
-    inner = MaxPooling2D(pool_size=(1, 2), name='max3')(inner)
-    inner = Dropout(0.3)(inner)
+        response = rekognition.detect_text(Image={'S3Object': {'Bucket': bucket, 'Name': key_name}})
 
-    # CNN to RNN
-    inner = Reshape(target_shape=((64, 1024)), name='reshape')(inner)
-    inner = Dense(64, activation='relu', kernel_initializer='he_normal', name='dense1')(inner)
+        textDetections = response['TextDetections']
 
-    ## RNN
-    inner = Bidirectional(LSTM(256, return_sequences=True), name = 'lstm1')(inner)
-    inner = Bidirectional(LSTM(256, return_sequences=True), name = 'lstm2')(inner)
+        # NLP by AWS Comprehend
+        words = []
+        for text in textDetections:
+            words.append(text['DetectedText'])
 
-    ## OUTPUT
-    inner = Dense(num_of_characters, kernel_initializer='he_normal',name='dense2')(inner)
-    y_pred = Activation('softmax', name='softmax')(inner)
+        # the words are replicated and need cutting
+        text = ' '.join(words)
+        text = text.split()
+        num = int(len(text) / 2)
+        words = text[0:num]
+        text = ' '.join(text[0:num])
 
-    model = Model(inputs=input_data, outputs=y_pred)
-
-    model.load_weights('../web_model_weights.h5')
-
-    # Get the result
-    test = pd.read_csv('written_name_test_v2.csv')
-
-    img_dir = 'test_v2/test/TEST_9992.jpg'
-    image = cv2.imread(img_dir, cv2.IMREAD_GRAYSCALE)
-
-    image = preprocess(image)
-    image = image/255.
-    pred = model.predict(image.reshape(1, 256, 64, 1))
-    decoded = K.get_value(K.ctc_decode(pred, input_length=np.ones(pred.shape[0])*pred.shape[1],
-                                       greedy=True)[0][0])
-    result = decoded[0]
-
-    return render_template('ml_result.html', result=result)
-
-def preprocess(img):
-    (h, w) = img.shape
-
-    final_img = np.ones([64, 256])*255 # blank white image
-
-    # crop
-    if w > 256:
-        img = img[:, :256]
-
-    if h > 64:
-        img = img[:64, :]
-
-
-    final_img[:h, :w] = img
-    return cv2.rotate(final_img, cv2.ROTATE_90_CLOCKWISE)
-
-def label_to_num(label):
-    global alphabets
-    label_num = []
-    for ch in label:
-        label_num.append(alphabets.find(ch))
-
-    return np.array(label_num)
-
-def num_to_label(num):
-    ret = ""
-    global alphabets
-    for ch in num:
-        if ch == -1:  # CTC Blank
-            break
-        else:
-            ret+=alphabets[ch]
-    return ret
+        return text
 
 @application.route('/upload_page', methods=['POST', 'GET'])
 def upload_page():
